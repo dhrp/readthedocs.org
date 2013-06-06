@@ -211,6 +211,11 @@ class Builder(BaseBuilder):
 
     def move(self, **kwargs):
         project = self.version.project
+
+        if (project.documentation_type == 'sphinx_htmldir'):
+            log.info("not copying files for html because dirhtml is set")
+            return
+
         if project.full_build_path(self.version.slug):
             #Copy the html files.
             target = project.rtd_build_path(self.version.slug)

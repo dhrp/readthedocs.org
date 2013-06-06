@@ -16,6 +16,10 @@ class Builder(HtmlBuilder):
     @restoring_chdir
     def build(self, **kwargs):
         project = self.version.project
+
+        log.info("removing the files from the original build directory")
+        shutil.rmtree(project.full_build_path(self.version.slug))
+
         os.chdir(self.version.project.conf_dir(self.version.slug))
         if project.use_virtualenv:
             build_command = '%s -b dirhtml . _build/html' % project.venv_bin(
@@ -51,3 +55,4 @@ class Builder(HtmlBuilder):
                                     target)
         else:
             log.warning("Not moving docs, because the build dir is unknown.")
+
