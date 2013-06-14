@@ -5,7 +5,7 @@ import shutil
 from doc_builder.base import restoring_chdir
 from doc_builder.backends.sphinx import Builder as HtmlBuilder
 from projects.utils import run
-from core.utils import copy_to_app_servers
+from core.utils import copy_to_app_servers, copy_to_dotcloud_static
 from django.conf import settings
 
 log = logging.getLogger(__name__)
@@ -18,7 +18,10 @@ class Builder(HtmlBuilder):
         project = self.version.project
 
         log.info("removing the files from the original build directory")
-        shutil.rmtree(project.full_build_path(self.version.slug))
+        try:
+            shutil.rmtree(project.full_build_path(self.version.slug))
+        except:
+            log.info("files do not exist, continue")
 
         os.chdir(self.version.project.conf_dir(self.version.slug))
         if project.use_virtualenv:
@@ -45,9 +48,16 @@ class Builder(HtmlBuilder):
             for target in targets:
                 if getattr(settings, "MULTIPLE_APP_SERVERS", None):
                     log.info("Copying docs to remote server.")
-                    copy_to_app_servers(
-                        project.full_build_path(self.version.slug), target)
+
+                    #copy_to_app_servers(
+                    #    project.full_build_path(self.version.slug), target)
+
+                    #also copy it using rsync to the static app.
+                    # copy_to_dotcloud_static(project.full_build_path(self.version.slug), target)
                 else:
+                    outdir = "{0}-{1}".format(project.slug, self.version.slug)
+                    log.info("Copying docs to remote server.")
+                    copy_to_dotcloud_static(project.full_build_path(self.version.slug), outdir)
                     if os.path.exists(target):
                         shutil.rmtree(target)
                     log.info("Copying docs on the local filesystem")

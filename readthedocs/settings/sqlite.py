@@ -18,6 +18,8 @@ BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 #CELERY_ALWAYS_EAGER = False
 
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
 SESSION_COOKIE_DOMAIN = None
 CACHE_BACKEND = 'dummy://'
@@ -27,6 +29,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 SLUMBER_USERNAME = 'test'
 SLUMBER_PASSWORD = 'test'
 SLUMBER_API_HOST = 'http://localhost:8000'
+#SLUMBER_API_HOST = 'https://rtfd4-mrp.dotcloud.com'
 
 WEBSOCKET_HOST = 'localhost:8088'
 

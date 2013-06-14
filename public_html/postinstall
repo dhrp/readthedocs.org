@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# symlink the generated folder information to the current dir
+ln -s /home/dotcloud/data/docker-latest/html /home/dotcloud/current/en/latest

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# write the ~/.ssh/config file, allowing copy of files to the static app
+python mksshconfig.py
+
+# collect static files
+# python readthedocs/manage.py collectstatic --settings=settings.dotcloud

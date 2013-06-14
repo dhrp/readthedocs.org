@@ -12,8 +12,7 @@ PRODUCTION_DOMAIN = 'readthedocs.org'
 USE_SUBDOMAIN = False
 
 ADMINS = (
-    ('Charlie Leifer', 'coleifer@gmail.com'),
-    ('Eric Holscher', 'eric@ericholscher.com'),
+    ('Thatcher Peskens', 'thatcher@dotcloud.com'),
 )
 
 MANAGERS = ADMINS

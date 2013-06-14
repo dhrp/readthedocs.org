@@ -36,7 +36,8 @@ class SubdomainMiddleware(object):
         # Serve CNAMEs
         if 'readthedocs.org' not in host and \
            'localhost' not in host and \
-           'testserver' not in host:
+           'testserver' not in host and \
+           settings.PRODUCTION_DOMAIN not in host:
             request.cname = True
             try:
                 slug = cache.get(host)

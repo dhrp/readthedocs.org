@@ -26,3 +26,17 @@ One is for users of readthedocs.org, that is the first section. The next section
 is for users of the code that powers the site. All of the RTD code is open
 source, so you can run your own instance. Presumably in an internal install
 inside your company, or something.
+
+
+dotCloud specific
+-----------------
+
+* Make sure postgresql and redis are running. Without redis you might get no warning api errors
+* Check set all domain specifics in settings/dotcloud.yml
+* Create database 'rtfd'
+* Setup the db -> run all manage commands always with --settings=settings.dotcloud
+ * ``manage.py Syncdb`` - do not immediately create superuser, as it will fail
+ * ``manage.py migrate``
+ * ``manage.py createsuperuser``
+* Manually copy docker user 'dotcloud.key' to /data/dockeruser.key, it is used to connect to the static app
+* Set SLUMBER_PASS in your environment.json, it should match a superuser which is created in the database

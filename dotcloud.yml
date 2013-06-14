@@ -1,2 +1,14 @@
 www:
   type: python
+  config:
+    python_version: v2.7
+
+db:
+  type: postgresql
+
+cache:
+  type: redis
+
+static:
+  type: static
+  approot: public_html

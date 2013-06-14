@@ -10,7 +10,7 @@ try:
         env = json.load(f)
         DATABASES = {
             'default': {
-                'ENGINE': 'django.db.backends.postgresql',
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
                 'NAME': 'rtfd',
                 'USER': env['DOTCLOUD_DB_SQL_LOGIN'],
                 'PASSWORD': env['DOTCLOUD_DB_SQL_PASSWORD'],
@@ -19,50 +19,79 @@ try:
                 }
         }
 
+
+        REDIS = {
+            'host': env['DOTCLOUD_CACHE_REDIS_HOST'],
+            'port': int(env['DOTCLOUD_CACHE_REDIS_PORT']),
+            'db': 0,
+#            'password': env['DOTCLOUD_CACHE_REDIS_LOGIN'],
+            'password': env['DOTCLOUD_CACHE_REDIS_PASSWORD']
+        }
+
+        BROKER_URL = env['DOTCLOUD_CACHE_REDIS_URL']
+
+        SLUMBER_USERNAME = 'admin'
+        SLUMBER_PASSWORD = env['SLUMBER_PASS'],
+        SLUMBER_API_HOST = 'https://docs-docker.dotcloud.com'
+
 except IOError:
     print 'Cannot load environment file (dotcloud). Maybe in local server ?'
 
+from unipath import Path
+PROJECT_ROOT = Path(__file__).ancestor(3)
+
 
 DEBUG = False
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 CELERY_ALWAYS_EAGER = False
 
 #MEDIA_URL = '//media.readthedocs.org/'
 #STATIC_URL = '//media.readthedocs.org/static/'
-ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
-SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+#ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
+#SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
+SESSION_COOKIE_DOMAIN = 'docs-docker.dotcloud.com'
+
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/dotcloud/data/media/'
+MEDIA_ROOT = '/home/dotcloud/current/media'
 STATIC_ROOT = '/home/dotcloud/volatile/static/'
 STATIC_URL = '/static/'
 
+# this value is not used as such, just the fact that it exists
+#MULTIPLE_APP_SERVERS = ["docs-docker.dotcloud.com", ]
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://odin:8983/solr',
-        }
-}
-
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'localhost:6379',
-        'PREFIX': 'docs',
-        'OPTIONS': {
-            'DB': 1,
-            'PARSER_CLASS': 'redis.connection.HiredisParser'
-        },
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
         },
     }
 
-SLUMBER_API_HOST = 'https://readthedocs.org'
-WEBSOCKET_HOST = 'websocket.readthedocs.org:8088'
+#HAYSTACK_CONNECTIONS = {
+#    'default': {
+#        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+#        'URL': 'http://odin:8983/solr',
+#        }
+#}
+#
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'redis_cache.RedisCache',
+#        'LOCATION': 'localhost:6379',
+#        'PREFIX': 'docs',
+#        'OPTIONS': {
+#            'DB': 1,
+#            'PARSER_CLASS': 'redis.connection.HiredisParser'
+#        },
+#        },
+#    }
 
-PRODUCTION_DOMAIN = 'readthedocs.org'
-USE_SUBDOMAIN = True
-NGINX_X_ACCEL_REDIRECT = True
+#WEBSOCKET_HOST = 'websocket.readthedocs.org:8088'
+#
+
+PRODUCTION_DOMAIN = 'docs-docker.dotcloud.com'
+#USE_SUBDOMAIN = True
+#NGINX_X_ACCEL_REDIRECT = True
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "https")
 
