@@ -4,4 +4,4 @@
 python mksshconfig.py
 
 # collect static files
-# python readthedocs/manage.py collectstatic --settings=settings.dotcloud
+cd readthedocs && python manage.py collectstatic --noinput --settings=settings.dotcloud
