@@ -18,7 +18,7 @@ BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 #CELERY_ALWAYS_EAGER = False
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 SESSION_COOKIE_DOMAIN = None
@@ -30,6 +30,12 @@ SLUMBER_USERNAME = 'test'
 SLUMBER_PASSWORD = 'test'
 SLUMBER_API_HOST = 'http://localhost:8000'
 #SLUMBER_API_HOST = 'https://rtfd4-mrp.dotcloud.com'
+
+#SLUMBER_USERNAME = 'admin'
+#SLUMBER_PASSWORD = 'This password is stored in prod env variable'
+#SLUMBER_API_HOST = 'https://docs-docker.dotcloud.com'
+
+
 
 WEBSOCKET_HOST = 'localhost:8088'
 

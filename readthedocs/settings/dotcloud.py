@@ -31,7 +31,7 @@ try:
         BROKER_URL = env['DOTCLOUD_CACHE_REDIS_URL']
 
         SLUMBER_USERNAME = 'admin'
-        SLUMBER_PASSWORD = env['SLUMBER_PASS'],
+        SLUMBER_PASSWORD = env['SLUMBER_PASS']
         SLUMBER_API_HOST = 'https://docs-docker.dotcloud.com'
 
 except IOError:
