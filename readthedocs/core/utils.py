@@ -14,12 +14,12 @@ def copy_to_dotcloud_static(full_build_path, outdir):
     """
     A helper to upload it to another static app
     """
-
-    rsync_cmd = "rsync -av {0} rtfd.static:data/{1}".format(full_build_path, outdir)
+    rsync_cmd = "rsync -av {0}/ rtfd.static:data/{1}".format(full_build_path, outdir)
     log.info("copying files from " + full_build_path)
     ret = os.system(rsync_cmd)
     if ret != 0:
-        log.error("rsync failed")
+        log.error("rsync failed {}".format(ret))
+        log.error("command was {}".format(rsync_cmd))
 
 def copy_to_app_servers(full_build_path, target, mkdir=True):
     """

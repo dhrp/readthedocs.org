@@ -40,3 +40,4 @@ dotCloud specific
  * ``manage.py createsuperuser``
 * Manually copy docker user 'dotcloud.key' to /data/dockeruser.key, it is used to connect to the static app
 * Set SLUMBER_PASS in your environment.json, it should match a superuser which is created in the database
+* To make sure the static app will accept the rsync command, add the slug name to the static apps' data dir: e.g. 'docker'

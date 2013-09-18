@@ -32,7 +32,11 @@ try:
 
         SLUMBER_USERNAME = 'admin'
         SLUMBER_PASSWORD = env['SLUMBER_PASS']
-        SLUMBER_API_HOST = 'https://docs-docker.dotcloud.com'
+        SLUMBER_API_HOST = 'https://{}'.format(env['DOTCLOUD_WWW_HTTP_HOST'])
+
+        # production domain is required, introduced with django 1.4 for security
+        PRODUCTION_DOMAIN = env['DOTCLOUD_WWW_HTTP_HOST']
+        SESSION_COOKIE_DOMAIN = env['DOTCLOUD_WWW_HTTP_HOST']
 
 except IOError:
     print 'Cannot load environment file (dotcloud). Maybe in local server ?'
@@ -50,7 +54,7 @@ CELERY_ALWAYS_EAGER = False
 #ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
 #SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
-SESSION_COOKIE_DOMAIN = 'docs-docker.dotcloud.com'
+
 
 
 MEDIA_URL = '/media/'
@@ -89,7 +93,6 @@ HAYSTACK_CONNECTIONS = {
 #WEBSOCKET_HOST = 'websocket.readthedocs.org:8088'
 #
 
-PRODUCTION_DOMAIN = 'docs-docker.dotcloud.com'
 #USE_SUBDOMAIN = True
 #NGINX_X_ACCEL_REDIRECT = True
 

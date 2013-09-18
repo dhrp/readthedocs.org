@@ -55,7 +55,7 @@ class Builder(HtmlBuilder):
                     #also copy it using rsync to the static app.
                     # copy_to_dotcloud_static(project.full_build_path(self.version.slug), target)
                 else:
-                    outdir = "{0}-{1}".format(project.slug, self.version.slug)
+                    outdir = "{0}/{1}/".format(project.slug, self.version.slug)
                     log.info("Copying docs to remote server.")
                     copy_to_dotcloud_static(project.full_build_path(self.version.slug), outdir)
                     if os.path.exists(target):

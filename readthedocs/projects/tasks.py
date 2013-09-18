@@ -455,7 +455,7 @@ def build_docs(version_pk, pdf, man, epub, dash, record, force):
         html_builder.clean()
         html_results = html_builder.build()
         if html_results[0] == 0:
-            html_builder.move()
+            html_builder.move() # this is where we shoud move to our custom move() command in sphinx_htmldir.py
 
         fake_results = (999, "Project Skipped, Didn't build",
                         "Project Skipped, Didn't build")
